@@ -1,14 +1,45 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
+import 'react-native-gesture-handler';
 import { StyleSheet, Text, View } from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import Home from '../agwa/components/home'
+import Details from '../agwa/components/details'
+import {createStore} from 'redux'
+import store from './components/redux/store'
+import { Provider } from 'react-redux'
+import Device from '../agwa/components/device' 
 
-export default function App() {
+const Stack = createStackNavigator();
+
+
+ function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+
+    
+    <NavigationContainer>
+    <StatusBar barStyle="dark-content" backgroundColor='white' />
+    <Stack.Navigator screenOptions={{header: () => null}}>
+      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Details" component={Details} />
+      <Stack.Screen name="Device" component={Device}/>
+    </Stack.Navigator>
+  </NavigationContainer>
+  
+
+    
   );
+}
+
+
+function AppProvider(){
+
+  return (
+  <Provider store={store}>
+    <App/>
+  </Provider>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -19,3 +50,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+
+export default AppProvider;
